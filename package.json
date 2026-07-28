@@ -1,0 +1,47 @@
+{
+  "name": "was-fb-mcp",
+  "version": "1.0.0",
+  "description": "Shareable Facebook & Meta Graph API MCP server — manage Facebook Pages, Posts, Comments, Ads, Insights, and Graph API endpoints.",
+  "type": "module",
+  "bin": {
+    "was-fb-mcp": "./cli.js"
+  },
+  "files": [
+    "cli.js",
+    "server.js",
+    "auth.js",
+    "config.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "node cli.js",
+    "auth": "node cli.js auth"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "facebook",
+    "meta",
+    "graph-api",
+    "claude",
+    "cursor",
+    "antigravity"
+  ],
+  "author": "WAS",
+  "license": "MIT",
+  "homepage": "https://github.com/was-org/was-fb-mcp",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/was-org/was-fb-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/was-org/was-fb-mcp/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0"
+  }
+}
