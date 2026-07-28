@@ -1,0 +1,17 @@
+# Never commit credentials or secrets
+.env
+.env.local
+.env.*.local
+node_modules/
+npm-debug.log*
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# Build & Cache
+dist/
+build/
