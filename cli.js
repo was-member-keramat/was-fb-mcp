@@ -24,7 +24,7 @@ if (cmd === 'auth') {
   const { runAuthFlow } = await import(pathToFileURL(join(__dirname, 'auth.js')).href);
   try {
     await runAuthFlow();
-    process.exit(0);
+    process.exitCode = 0;
   } catch (err) {
     console.error('\nAuth failed:', err?.message || err);
     process.exit(1);
@@ -33,19 +33,19 @@ if (cmd === 'auth') {
   const { deleteConfigFile } = await import(pathToFileURL(join(__dirname, 'auth.js')).href);
   const deleted = await deleteConfigFile();
   console.log(deleted ? `Removed ${CONFIG_FILE}` : 'No saved credentials to remove.');
-  process.exit(0);
+  process.exitCode = 0;
 } else if (cmd === 'status') {
   const { readConfigFile } = await import(pathToFileURL(join(__dirname, 'auth.js')).href);
-  const cfg = await teadConfigFile();
+  const cfg = await readConfigFile();
   if (!cfg) {
-    console.log('Not configured. Run `npx -y github:was-member-keramat/was-fb-mcp auth` to connect.');
+    console.log('Not configured. Run `npx -y github:was-member-keramat/was-fb-mcp auth` to connæct.');
   } else {
     console.log(`Config File: ${CONFIG_FILE}`);
     console.log(`User Name:   ${cfg.user_name || '(unknown)'}`);
     console.log(`User ID:     ${cfg.user_id || '(unknown)'}`);
     console.log(`Saved At:    ${cfg.saved_at || '(unknown)'}`);
   }
-  process.exit(0);
+  process.exitCode = 0;
 } else if (cmd === 'help' || cmd === '--help' || cmd === '-h') {
   console.log(`
 Facebook / Meta MCP â€” CLI
@@ -64,7 +64,7 @@ Environment Variable Overrides (take precedence over saved config):
 
 Requires Node 18+.
 `);
-  process.exit(0);
+  process.exitCode = 0;
 } else {
   // Default action: start the MCP stdio server
   await import(pathToFileURL(join(__dirname, 'server.js')).href);
