@@ -5,28 +5,41 @@ All notable changes to `was-fb-mcp` will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 1.0.1 — 2026-07-28
+## [1.0.5] - 2026-07-28
 
-### Fixes
+### Fixed
 
-- **Fix `node:url` import in `cli.js`:** Corrected `pathToURL` import typo to `pathToFileURL` for Node ESM dynamic import compatibility.
+- Re-published clean, verified `server.js` build without duplicate string tokens.
 
-## 1.0.0 — 2026-07-28
+## [1.0.4] - 2026-07-28
 
-### New Features
+### Fixed
 
-- **Initial release of `was-fb-mcp`** — Shareable Facebook & Meta Graph API MCP server.
-- Interactive authentication CLI (`auth`, `status`, `logout`, `help`).
-- Cross-platform stdio transport compatible with Claude Desktop, Cursor, Google Antigravity, VS Code, and Zed.
-- Local secure credential storage (`~/.was-fb-mcp/config.json` at mode `0600`) with environment variable overrides (`FB_ACCESS_TOKEN`).
-- **Tools Catalog (10 tools):**
-  - `fb_get_me`: Fetch profile / token owner info.
-  - `fb_list_pages`: List Facebook Pages managed by user.
-  - `fb_create_post`: Publish post to a Facebook Page.
-  - `fb_get_page_feed`: Fetch recent Page feed posts.
-  - `fb_get_post_comments`: Fetch comments on a post.
-  - `fb_reply_comment`: Comment/reply to a post or comment.
-  - `fb_list_ad_accounts`: List Meta Ad Accounts.
-  - `fb_list_campaigns`: List ad campaigns in an Ad Account.
-  - `fb_get_insights`: Fetch performance metrics and insights.
-  - `fb_api`: Universal escape hatch tool to invoke any Facebook Graph API endpoint.
+- Fixed broken JSON formatting (`"type: "git"`) in `package.json`.
+
+## [1.0.3] - 2026-07-28
+
+### Fixed
+
+- Fixed `const GRAPH_VERSION` syntax typo in `server.js`.
+
+## [1.0.2] - 2026-07-28
+
+### Fixed
+
+- Fixed Windows libuv assertion error (`Assertion failed: !(handle->flags & UV_HANDLE_CLOSING)`) on CLI commands by replacing `process.exit(0)` with `process.exitCode = 0`.
+
+## [1.0.1] - 2026-07-28
+
+### Fixed
+
+- Fixed Node 24+ ESM loader import error by switching `pathToURL` to `pathToFileURL`.
+
+## [1.0.0] - 2026-07-28
+
+### Added
+
+- Initial release of `was-fb-mcp` — Shareable Facebook & Meta Graph API MCP Server.
+- Interactive authentication CLI command (`npx -y github:was-member-keramat/was-fb-mcp auth`).
+- 10 Facebook Graph API tools (`fb_get_me`, `fb_list_pages`, `fb_create_post`, `fb_get_page_feed`, `fb_get_post_comments`, `fb_reply_comment`, `fb_list_ad_accounts`, `fb_list_campaigns`, `fb_get_insights`, `fb_api`).
+- Standard stdio MCP transport for Claude, Codex, Antigravity, Cursor, VS Code, Zed.
