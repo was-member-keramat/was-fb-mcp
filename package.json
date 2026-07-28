@@ -1,6 +1,6 @@
 {
   "name": "was-fb-mcp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Shareable Facebook & Meta Graph API MCP server — manage Facebook Pages, Posts, Comments, Ads, Insights, and Graph API endpoints.",
   "type": "module",
   "bin": {
