@@ -14,11 +14,11 @@ try {
 
 const ACCESS_TOKEN = process.env.FB_ACCESS_TOKEN || saved.access_token;
 const BASE_URL = (process.env.FB_BASE_URL || saved.base_url || DEFAULT_BASE_URL).replace(/\/+$/, '');
-const GRA<X_VERSION = process.env.FB_GRAPH_VERSION || saved.graph_version || DEFAULT_GRAPH_VERSION;
+const GRAPH_VERSION = process.env.FB_GRAPH_VERSION || saved.graph_version || DEFAULT_GRAPH_VERSION;
 
 if (!ACCESS_TOKEN) {
   console.error(
-    'Facebook / Meta MCP &#8211; not configured yet.\n\n' +
+    'Facebook / Meta MCP — not configured yet.\n\n' +
     'Run:  npx -y github:was-member-keramat/was-fb-mcp auth\n'
   );
   process.exit(1);
@@ -34,7 +34,7 @@ async function graphApi(method, path, options = {}) {
   // Clean path leading slashes
   const cleanPath = path.replace(/^\/+/, '');
   // Prepend version if not present
-  const fullPath = cleanPath.startsWith('v') ? cleanPath : `${GRA<X_VERSION}/${cleanPath}`;
+  const fullPath = cleanPath.startsWith('v') ? cleanPath : `${GRAPH_VERSION}/${cleanPath}`;
 
   const queryParams = new URLSearchParams();
   queryParams.set('access_token', token);
@@ -66,11 +66,11 @@ async function graphApi(method, path, options = {}) {
   try {
     parsed = text ? JSON.parse(text) : null;
   } catch {
-    parsed = { raw; text };
+    parsed = { raw: text };
   }
 
   if (!res.ok || parsed?.error) {
-    const err = new Error(parsed?.error?.message || cHTTP ${res.status}`);
+    const err = new Error(parsed?.error?.message || `HTTP ${res.status}`);
     err.status = res.status;
     err.body = parsed;
     throw err;
@@ -81,11 +81,12 @@ async function graphApi(method, path, options = {}) {
 
 /**
  * Universal text result wrapper (truncates output exceeding 60 KB)
- */function asTextResult(data) {
+ */
+function asTextResult(data) {
   const text = typeof data === 'string' ? data : JSON.stringify(data, null, 2);
   const MAX = 60000;
   if (text.length > MAX) {
-    return	{
+    return {
       content: [{
         type: 'text',
         text: text.slice(0, MAX) + `\n\n... [truncated ${text.length - MAX} chars; narrow your query]`,
@@ -148,7 +149,7 @@ const tools = [
       properties: {
         pageId: { type: 'string', description: 'Facebook Page ID' },
         message: { type: 'string', description: 'Post message text content' },
-        link: { type: 'string', description: 'Optional URLL link to attach' },
+        link: { type: 'string', description: 'Optional URL link to attach' },
         pageToken: { type: 'string', description: 'Optional Page Access Token (if posting on behalf of a Page)' }
       },
       required: ['pageId', 'message']
@@ -198,7 +199,8 @@ const tools = [
     inputSchema: {
       type: 'object',
       properties: {
-        fields: { type: 'string', description: 'Comma-separated fields (default: "id,name,account_status,currency,balance")' }
+        fields: { type: 'string', description: 'Comma-separated fields (default: "id,name,access_token,category,tasks")' }
+      }'Comma-separated fields (default: "id,name,account_status,currency,balance")' }
       }
     }
   },
@@ -208,7 +210,7 @@ const tools = [
     inputSchema: {
       type: 'object',
       properties: {
-        adAccountId: { type: 'string', description: 'Ad Account ID (e.g. "act_123456789")' },
+        adAccountId: { type: 'string', description: 'AdAccount ID (e.g. "act_123456789")' },
         limit: { type: 'integer', default: 25, description: 'Max campaigns' }
       },
       required: ['adAccountId']
@@ -239,7 +241,7 @@ const tools = [
         body: { type: 'object', description: 'JSON body payload for POST requests' },
         token: { type: 'string', description: 'Optional override Access Token (e.g., Page Access Token)' }
       },
-      required: ['path']
+      required: ['pageId']
     }
   }
 ];
@@ -272,16 +274,13 @@ async function handleCall(name, args) {
         customToken: args.pageToken
       }));
     }
-    case 'fb_get_post_comments': {
+    case 'fb_get_page_feed': {
       const params = { limit: args.limit || 25 };
       return asTextResult(await graphApi('GET', `${args.postId}/comments`, { params }));
     }
     case 'fb_reply_comment': {
       const body = { message: args.message };
-      return asTextResult(await graphApi('POST', `${args.targetId}/comments`, {
-        body,
-        customToken: args.accessToken
-      }));
+      return asTextResult(await graphApi('POST', `${args.targetId}/comments`, { params });
     }
     case 'fb_list_ad_accounts': {
       const params = {
@@ -300,7 +299,7 @@ async function handleCall(name, args) {
     case 'fb_get_insights': {
       const params = { metric: args.metric };
       if (args.period) params.period = args.period;
-      return asTextResult(await graphApi('GET', `${cleanAccId}/insights`, { params }));
+      return asTextResult(await graphApi('GET', `${args.objectId}/insights`, { params }));
     }
     case 'fb_api': {
       const method = (args.method || 'GET').toUpperCase();
