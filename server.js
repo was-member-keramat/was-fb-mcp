@@ -98,7 +98,8 @@ function asTextResult(data) {
 
 /**
  * Machine-readable error wrapper decoding Meta Graph API errors
- */function asError(err) {
+ */
+function asError(err) {
   const vendorError = err?.body?.error || null;
   return {
     isError: true,
@@ -117,7 +118,7 @@ function asTextResult(data) {
   };
 }
 
-/** 
+/**
  * Tool Catalog Definition
  */
 const tools = [
@@ -199,8 +200,7 @@ const tools = [
     inputSchema: {
       type: 'object',
       properties: {
-        fields: { type: 'string', description: 'Comma-separated fields (default: "id,name,access_token,category,tasks")' }
-      }'Comma-separated fields (default: "id,name,account_status,currency,balance")' }
+        fields: { type: 'string', description: 'Comma-separated fields (default: "id,name,account_status,currency,balance")' }
       }
     }
   },
@@ -210,7 +210,7 @@ const tools = [
     inputSchema: {
       type: 'object',
       properties: {
-        adAccountId: { type: 'string', description: 'AdAccount ID (e.g. "act_123456789")' },
+        adAccountId: { type: 'string', description: 'Ad Account ID (e.g. "act_123456789")' },
         limit: { type: 'integer', default: 25, description: 'Max campaigns' }
       },
       required: ['adAccountId']
@@ -241,7 +241,7 @@ const tools = [
         body: { type: 'object', description: 'JSON body payload for POST requests' },
         token: { type: 'string', description: 'Optional override Access Token (e.g., Page Access Token)' }
       },
-      required: ['pageId']
+      required: ['path']
     }
   }
 ];
@@ -274,17 +274,20 @@ async function handleCall(name, args) {
         customToken: args.pageToken
       }));
     }
-    case 'fb_get_page_feed': {
+    case 'fb_get_post_comments': {
       const params = { limit: args.limit || 25 };
       return asTextResult(await graphApi('GET', `${args.postId}/comments`, { params }));
     }
     case 'fb_reply_comment': {
       const body = { message: args.message };
-      return asTextResult(await graphApi('POST', `${args.targetId}/comments`, { params });
+      return asTextResult(await graphApi('POST', `${args.targetId}/comments`, {
+        body,
+        customToken: args.accessToken
+      }));
     }
     case 'fb_list_ad_accounts': {
       const params = {
-        fields: args.fields || 'id,name,access_token,category,tasks'
+        fields: args.fields || 'id,name,account_status,currency,balance'
       };
       return asTextResult(await graphApi('GET', 'me/adaccounts', { params }));
     }
