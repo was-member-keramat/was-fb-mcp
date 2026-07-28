@@ -30,13 +30,13 @@
   ],
   "author": "WAS",
   "license": "MIT",
-  "homepage": "https://github.com/was-org/was-fb-mcp",
+  "homepage": "https://github.com/was-member-keramat/was-fb-mcp",
   "repository": {
     "type": "git",
-    "url": "https://github.com/was-org/was-fb-mcp.git"
+    "url": "https://github.com/was-member-keramat/was-fb-mcp.git"
   },
   "bugs": {
-    "url": "https://github.com/was-org/was-fb-mcp/issues"
+    "url": "https://github.com/was-member-keramat/was-fb-mcp/issues"
   },
   "engines": {
     "node": ">=18.0.0"
