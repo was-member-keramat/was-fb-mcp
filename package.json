@@ -1,6 +1,6 @@
 {
   "name": "was-fb-mcp",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Shareable Facebook & Meta Graph API MCP server — manage Facebook Pages, Posts, Comments, Ads, Insights, and Graph API endpoints.",
   "type": "module",
   "bin": {
@@ -32,7 +32,7 @@
   "license": "MIT",
   "homepage": "https://github.com/was-member-keramat/was-fb-mcp",
   "repository": {
-    "type": "git",
+    "type: "git",
     "url": "https://github.com/was-member-keramat/was-fb-mcp.git"
   },
   "bugs": {
